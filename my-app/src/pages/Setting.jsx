@@ -15,25 +15,6 @@ function Setting() {
   const [chipFake, setChipFake] = useState(null);
   const username = "추성우";
   var c = "";
-  function showChipFake() {
-    var m = Number(money);
-    var i = 5;
-    c = "";
-
-    while (m !== 0) {
-      if (m - array2[i] >= 0) {
-        if (c === "") {
-          c = `${array[i]}`;
-        } else {
-          c = c + ` ${array[i]}`;
-        }
-        m -= array2[i];
-      } else {
-        i--;
-      }
-    }
-  }
-
   return (
     <Layout>
       <InfoBox>
@@ -55,6 +36,7 @@ function Setting() {
                     if (bank - array2[index] >= 0) {
                       setMoney(money + array2[index]);
                       setBank(bank - array2[index]);
+                      setChipFake(array[index]);
                     } else {
                       alert("돈이 엄서여");
                     }
@@ -67,13 +49,6 @@ function Setting() {
         <ButtonBox>
           <AllIn
             onClick={() => {
-              showChipFake();
-            }}
-          >
-            CHECK
-          </AllIn>
-          <AllIn
-            onClick={() => {
               setMoney(money + bank);
               setBank(0);
             }}
@@ -84,6 +59,7 @@ function Setting() {
             onClick={() => {
               setBank(money + bank);
               setMoney(0);
+              setChipFake();
             }}
           >
             RESET
@@ -115,7 +91,7 @@ const InfoBox = styled.div`
 `;
 
 const Coins = styled.div`
-  width: 18rem;
+  width: 0rem;
 `;
 
 const UserInfoBox = styled.div`
