@@ -10,11 +10,10 @@ import c5000 from "../assets/5000c.png";
 function Setting() {
   const array = [c50, c100, c500, c1000, c2500, c5000];
   const array2 = [50, 100, 500, 1000, 2500, 5000];
-  const [bank, setBank] = useState(5000);
-  const [money, setMoney] = useState(0);
+  const [bank, setBank] = useState(localStorage.getItem("bank") || 0);
+  const [money, setMoney] = useState(localStorage.getItem("money") || 0);
   const [chipFake, setChipFake] = useState(null);
   const username = "추성우";
-  var c = "";
   return (
     <Layout>
       <InfoBox>
@@ -64,7 +63,15 @@ function Setting() {
           >
             RESET
           </Reset>
-          <Deal>DEAL</Deal>
+          <Deal
+            onClick={() => {
+              localStorage.setItem("bank", bank);
+              localStorage.setItem("money", money);
+              window.location.href = "single";
+            }}
+          >
+            DEAL
+          </Deal>
           <Leave>LEAVE</Leave>
         </ButtonBox>
       </ActiveBox>
