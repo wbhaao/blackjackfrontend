@@ -75,15 +75,15 @@ function Setting() {
           </Deal>
           <Leave
             onClick={async () => {
-              const a = (
-                await axios.get(
+              const a = await axios
+                .get(
                   `http://localhost:5000/save?name=${localStorage.getItem(
                     "name"
                   )}&value=${bank + money}`
                 )
-              ).catch((error) => {
-                window.location.href = "/";
-              });
+                .catch((error) => {
+                  window.location.href = "/";
+                });
               window.location.href = "/";
             }}
           >
