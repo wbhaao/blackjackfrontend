@@ -6,6 +6,7 @@ import c500 from "../assets/500c.png";
 import c1000 from "../assets/1000c.png";
 import c2500 from "../assets/2500c.png";
 import c5000 from "../assets/5000c.png";
+import axios from "axios";
 
 function Setting() {
   const array = [c50, c100, c500, c1000, c2500, c5000];
@@ -13,7 +14,7 @@ function Setting() {
   const [bank, setBank] = useState(localStorage.getItem("bank") || 0);
   const [money, setMoney] = useState(localStorage.getItem("money") || 0);
   const [chipFake, setChipFake] = useState(null);
-  const username = "추성우";
+  const username = localStorage.getItem("name");
   return (
     <Layout>
       <InfoBox>
@@ -32,9 +33,9 @@ function Setting() {
                 <Chip
                   src={item}
                   onClick={() => {
-                    if (bank - array2[index] >= 0) {
-                      setMoney(money + array2[index]);
-                      setBank(bank - array2[index]);
+                    if (Number(bank) - Number(array2[index]) >= 0) {
+                      setMoney(Number(money) + Number(array2[index]));
+                      setBank(Number(bank) - Number(array2[index]));
                       setChipFake(array[index]);
                     } else {
                       alert("돈이 엄서여");
@@ -48,7 +49,7 @@ function Setting() {
         <ButtonBox>
           <AllIn
             onClick={() => {
-              setMoney(money + bank);
+              setMoney(Number(money) + Number(bank));
               setBank(0);
             }}
           >
@@ -56,7 +57,7 @@ function Setting() {
           </AllIn>
           <Reset
             onClick={() => {
-              setBank(money + bank);
+              setBank(Number(money) + Number(bank));
               setMoney(0);
               setChipFake();
             }}
@@ -73,7 +74,12 @@ function Setting() {
             DEAL
           </Deal>
           <Leave
-            onClick={() => {
+            onClick={async () => {
+              const a = await axios.get(
+                `http://localhost:5000/save?name=${localStorage.getItem(
+                  "name"
+                )}&value=${bank + money}`
+              );
               window.location.href = "/";
             }}
           >

@@ -11,12 +11,14 @@ function Login() {
   async function login(params) {
     console.log(params);
     const a = await axios.get(`http://localhost:5000/signin?name=${params}`);
-    console.log(a);
+    let b = Number(a["data"]);
     if (a === 9999) {
       console.log("실패!");
       window.location.href = "login";
     } else {
-      localStorage.setItem("bank", Number(a));
+      localStorage.setItem("bank", b);
+      localStorage.setItem("money", Number(0));
+      localStorage.setItem("name", text);
       window.location.href = "setting";
     }
   }

@@ -132,10 +132,12 @@ function Single() {
         Number(localStorage.getItem("bank")) +
           Number(localStorage.getItem("money"))
       );
+      localStorage.setItem("money", 0);
       setState("draw");
       // Lose
     } else if (myScore > 21 || (myScore < dealerScore && dealerScore < 21)) {
       localStorage.setItem("bank", Number(localStorage.getItem("bank")));
+      localStorage.setItem("money", 0);
       setState("lose");
     }
     // Win
@@ -145,6 +147,7 @@ function Single() {
         Number(localStorage.getItem("bank")) +
           Number(localStorage.getItem("money") * 2)
       );
+      localStorage.setItem("money", 0);
       setState("win");
     }
   }
@@ -224,7 +227,7 @@ function Single() {
           </CardBox>
           <InfoBox>
             <Score>{myScore}</Score>
-            <Name>김규민</Name>
+            <Name>{localStorage.getItem("name")}</Name>
           </InfoBox>
         </MyBox>
       </Board>
