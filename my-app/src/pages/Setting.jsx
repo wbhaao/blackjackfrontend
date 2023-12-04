@@ -72,7 +72,13 @@ function Setting() {
           >
             DEAL
           </Deal>
-          <Leave>LEAVE</Leave>
+          <Leave
+            onClick={() => {
+              window.location.href = "/";
+            }}
+          >
+            LEAVE
+          </Leave>
         </ButtonBox>
       </ActiveBox>
     </Layout>

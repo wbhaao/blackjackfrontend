@@ -1,20 +1,47 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import axios from "axios";
 
 function Login() {
+  const [text, setText] = useState("");
+
+  const onChange = (event) => {
+    setText(event.target.value);
+  };
+  async function login(params) {
+    console.log(params);
+    const a = await axios.get(`http://localhost:5000/signin?name=${params}`);
+    console.log(a);
+    if (a === 9999) {
+      console.log("실패!");
+      window.location.href = "login";
+    } else {
+      localStorage.setItem("bank", Number(a));
+      window.location.href = "setting";
+    }
+  }
   return (
     <Layout>
-      <LoginForm>
-        <InputBox>
-          <LoginInput type="text" name="name" placeholder="name"></LoginInput>
-          <LoginInput
-            type="password"
-            name="password"
-            placeholder="password"
-          ></LoginInput>
-        </InputBox>
-        <SendButton type="submit"></SendButton>
-      </LoginForm>
+      <InputBox>
+        <LoginInput
+          onChange={onChange}
+          type="text"
+          name="name"
+          placeholder="name"
+        ></LoginInput>
+        <LoginInput
+          type="password"
+          name="password"
+          placeholder="password"
+        ></LoginInput>
+        <SendButton
+          onClick={() => {
+            login(text);
+          }}
+        >
+          submit
+        </SendButton>
+      </InputBox>
     </Layout>
   );
 }
@@ -23,6 +50,7 @@ const Layout = styled.div`
   height: 100%;
   position: absolute;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   background-color: #423030;
@@ -53,7 +81,7 @@ const LoginInput = styled.input`
   padding: 1rem;
 `;
 
-const SendButton = styled.input`
+const SendButton = styled.button`
   height: 8rem;
   width: 100%;
   border-radius: 100rem;
