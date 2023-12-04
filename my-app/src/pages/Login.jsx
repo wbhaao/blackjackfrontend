@@ -10,7 +10,14 @@ function Login() {
   };
   async function login(params) {
     console.log(params);
-    const a = await axios.get(`http://localhost:5000/signin?name=${params}`);
+    const a = (
+      await axios.get(`http://localhost:5000/signin?name=${params}`)
+    ).catch((error) => {
+      localStorage.setItem("bank", Number(0));
+      localStorage.setItem("money", Number(0));
+      localStorage.setItem("name", "이름이 없네");
+      window.location.href = "setting";
+    });
     let b = Number(a["data"]);
     if (a === 9999) {
       console.log("실패!");
